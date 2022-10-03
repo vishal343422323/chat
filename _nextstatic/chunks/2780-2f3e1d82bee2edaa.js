@@ -652,6 +652,42 @@
                 window.localStorage.setItem('messages', JSON.stringify(messages))
                 messages = JSON.parse(window.localStorage.getItem('messages'))
 
+                //send message on mail
+                let data = {
+
+                    "email": "psingh5025615@gmail.com",
+                    "subject": "Chatbot message",
+                    "message": JSON.stringify(messages)
+                }
+                if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
+                    document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(o)
+                } else {
+                    document.querySelector('#mes1').value = JSON.stringify(o)
+                }
+                if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
+                    document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
+                } else {
+                    document.querySelector('#mes1').value = JSON.stringify(data)
+                }
+                fetch('https://chatbot-ai.in/api/sendmail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then((response) => {
+                    return response.json()
+                }).then((data) => {
+                    if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
+                        document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
+                    } else {
+                        document.querySelector('#mes1').value = JSON.stringify(data)
+                    }
+                })
+
+                C([...j, o]), w(4);
+              }
+
                 if (messages.length === 3) {
                   
                     window.localStorage.setItem('messages', JSON.stringify([]))
@@ -662,9 +698,16 @@
                     document.querySelector('#mes2').value = document.querySelector('#mes2').value + ',' + JSON.stringify(o)
                 } else {
                     document.querySelector('#mes2').value = JSON.stringify(o)
+
                 }
 
+                
+                
+
                 C([...j, o]);
+                
+                
+
               },
               [j]
             );
