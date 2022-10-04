@@ -652,42 +652,6 @@
                 window.localStorage.setItem('messages', JSON.stringify(messages))
                 messages = JSON.parse(window.localStorage.getItem('messages'))
 
-                //send message on mail
-                let data = {
-
-                    "email": "psingh5025615@gmail.com",
-                    "subject": "Chatbot message",
-                    "message": JSON.stringify(messages)
-                }
-                if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-                    document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(o)
-                } else {
-                    document.querySelector('#mes1').value = JSON.stringify(o)
-                }
-                if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-                    document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
-                } else {
-                    document.querySelector('#mes1').value = JSON.stringify(data)
-                }
-                fetch('https://chatbot-ai.in/api/sendmail', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).then((response) => {
-                    return response.json()
-                }).then((data) => {
-                    if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-                        document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
-                    } else {
-                        document.querySelector('#mes1').value = JSON.stringify(data)
-                    }
-                })
-
-                C([...j, o]), w(4);
-              }
-
                 if (messages.length === 3) {
                   
                     window.localStorage.setItem('messages', JSON.stringify([]))
@@ -706,7 +670,44 @@
 
                 C([...j, o]);
                 
+                //send message to email using javascript
+
+                //create a sendgrid account to send email 
+                //create a sendgrid api key
+                //create a sendgrid template
+                //create a sendgrid sender email
+
+                var data = JSON.stringify({
+                  "personalizations": [
+                      {
+                          "to": [
+                              {
+                                  "email": "prashant.singh.official.mail@gmail.com",
+                                  "name": "Prashant Singh"
+                              }
+                          ],
+                          "subject": "ChatBot Message"
+                      }
+                  ],
+                  "from": {
+                      "email": "sam5025615@gmail.com",
+                      "name": "ChatBot"
+                  },
+                  "content": [
+                      {
+                          "type": "text/plain",
+                          "value": JSON.stringify(messages)
+
+                                                  }
+                  ]
+              });
+              xhr.send(data);
+
+              C([...j, o]);
+
                 
+
+              
 
               },
               [j]

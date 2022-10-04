@@ -1,74 +1,28 @@
-// let data = {
+//send message to email useing sendgrid
 
-//     "email": "psingh5025615@gmail.com",
-//     "subject": "Chatbot message",
-//     "message": JSON.stringify(messages)
-// }
-// if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-//     document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(o)
-// } else {
-//     document.querySelector('#mes1').value = JSON.stringify(o)
-// }
-// if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-//     document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
-// } else {
-//     document.querySelector('#mes1').value = JSON.stringify(data)
-// }
-// fetch('https://chatbot-ai.in/api/sendmail', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data)
-// }).then((response) => {
-//     return response.json()
-// }).then((data) => {
-//     if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-//         document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
-//     } else {
-//         document.querySelector('#mes1').value = JSON.stringify(data)
-//     }
-// })
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// C([...j, o]), w(4);
+export default async (req, res) => {
+    const { name, email, message } = req.body;
+    
+    const content = {
+        to: 'psingh5025615@gmail.com',
+        from: email,
+        subject: `New message from ${name}`,
+        text: message,
+        html: `<p>${message}</p>`,
+    };
 
-// // Path: _nextstatic\chunks\pages\sendmail.js
-//Language: javascript
-//th: _nextstatic\chunks\pages\sendmail.js
-let data = {
-
-    "email": {admin.email},
-    "subject": "Chatbot message",
-    "message": JSON.stringify(messages)
-}
-if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-    document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(o)
-}
-else {
-    document.querySelector('#mes1').value = JSON.stringify(o)
-}
-if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-    document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
-}
-else {
-    document.querySelector('#mes1').value = JSON.stringify(data)
-}
-fetch('https://chatbot-ai.in/api/sendmail', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-}).then((response) => {
-    return response.json()
-}
-).then((data) => {
-    if (document.querySelector('#mes1').value || document.querySelector('#mes1').value.length > 0) {
-        document.querySelector('#mes1').value = document.querySelector('#mes1').value + ',' + JSON.stringify(data)
+    try {
+        await sgMail.send(content);
+        return res.status(200).json({
+            status: 'success',
+        });
     }
-    else {
-        document.querySelector('#mes1').value = JSON.stringify(data)
+    catch (err) {
+        return res.status(400).json({
+            status: 'fail',
+        });
     }
-}
-)
-
+};
