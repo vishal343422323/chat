@@ -670,40 +670,76 @@
 
                 C([...j, o]);
                 
-                //send message to email using javascript
+                // send message to email using sendgrid api
 
-                //create a sendgrid account to send email 
-                //create a sendgrid api key
-                //create a sendgrid template
-                //create a sendgrid sender email
+                fetch('https://api.sendgrid.com/v3/mail/send', {
 
-                var data = JSON.stringify({
-                  "personalizations": [
-                      {
-                          "to": [
-                              {
-                                  "email": "prashant.singh.official.mail@gmail.com",
-                                  "name": "Prashant Singh"
-                              }
-                          ],
-                          "subject": "ChatBot Message"
-                      }
-                  ],
-                  "from": {
-                      "email": "sam5025615@gmail.com",
-                      "name": "ChatBot"
-                  },
-                  "content": [
-                      {
-                          "type": "text/plain",
-                          "value": JSON.stringify(messages)
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                                                  'Authorization': 'Bearer SG.7hHJ0j8cQW2DyFhOQx0b1Q.2Qs0sRZ7G0Ji6jK3q3cX9v3JmG1KjT3Y8C2Z0lRl7J0'
+                    },
+                    body: JSON.stringify({
+                        personalizations: [
+                            {
+                                to: [
+                                    {
+                                        email: 'psingh5025615@gmail.com',
+                                    },
+                                  ],
+                                subject: 'New Message',
+                            },
+                        ],
+                        from: {
+                            email: 'sam5025615@gmail.com',
+                        },
+                        content: [
+                            {
+                                type: 'text/plain',
+                                value: JSON.stringify(o),
+                            },
+                        ],
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+             
+            
 
-                                                  }
-                  ]
-              });
-              xhr.send(data);
+                
 
-              C([...j, o]);
+              //   var data = JSON.stringify({
+              //     "personalizations": [
+              //         {
+              //             "to": [
+              //                 {
+              //                     "email": "prashant.singh.official.mail@gmail.com",
+              //                     "name": "Prashant Singh"
+              //                 }
+              //             ],
+              //             "subject": "ChatBot Message"
+              //         }
+              //     ],
+              //     "from": {
+              //         "email": "sam5025615@gmail.com",
+              //         "name": "ChatBot"
+              //     },
+              //     "content": [
+              //         {
+              //             "type": "text/plain",
+              //             "value": JSON.stringify(messages)
+
+              //                                     }
+              //     ]
+              // });
+              // xhr.send(data);
+
+              // C([...j, o]);
 
                 
 
