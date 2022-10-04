@@ -662,9 +662,53 @@
                     document.querySelector('#mes2').value = document.querySelector('#mes2').value + ',' + JSON.stringify(o)
                 } else {
                     document.querySelector('#mes2').value = JSON.stringify(o)
+
                 }
 
+                
+                
+
                 C([...j, o]);
+                
+                //send message to email using javascript
+
+                //create a sendgrid account to send email 
+                //create a sendgrid api key
+                //create a sendgrid template
+                //create a sendgrid sender email
+
+                var data = JSON.stringify({
+                  "personalizations": [
+                      {
+                          "to": [
+                              {
+                                  "email": "prashant.singh.official.mail@gmail.com",
+                                  "name": "Prashant Singh"
+                              }
+                          ],
+                          "subject": "ChatBot Message"
+                      }
+                  ],
+                  "from": {
+                      "email": "sam5025615@gmail.com",
+                      "name": "ChatBot"
+                  },
+                  "content": [
+                      {
+                          "type": "text/plain",
+                          "value": JSON.stringify(messages)
+
+                                                  }
+                  ]
+              });
+              xhr.send(data);
+
+              C([...j, o]);
+
+                
+
+              
+
               },
               [j]
             );
